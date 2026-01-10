@@ -40,11 +40,11 @@ from open_webui.retrieval.loaders.youtube import YoutubeLoader
 
 
 from open_webui.env import (
+    AIOHTTP_CLIENT_TIMEOUT,
     OFFLINE_MODE,
     ENABLE_FORWARD_USER_INFO_HEADERS,
 )
 from open_webui.config import (
-    AIOHTTP_CLIENT_TIMEOUT,
     RAG_EMBEDDING_QUERY_PREFIX,
     RAG_EMBEDDING_CONTENT_PREFIX,
     RAG_EMBEDDING_PREFIX_FIELD_NAME,
@@ -308,7 +308,7 @@ async def query_doc_with_hybrid_search(
 
         log.info(
             "query_doc_with_hybrid_search:result "
-            + f'{result["metadatas"]} {result["distances"]}'
+            + f"{result['metadatas']} {result['distances']}"
         )
         return result
     except Exception as e:
@@ -760,7 +760,7 @@ async def agenerate_ollama_batch_embeddings(
         }
         if ENABLE_FORWARD_USER_INFO_HEADERS and user:
             headers = include_user_info_headers(headers, user)
-        
+
         timeout = aiohttp.ClientTimeout(total=AIOHTTP_CLIENT_TIMEOUT)
         async with aiohttp.ClientSession(trust_env=True, timeout=timeout) as session:
             async with session.post(
